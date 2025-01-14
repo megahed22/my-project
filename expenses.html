@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المصروفات</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>المصروفات</title>
 </head>
 <body>
-    <div class="expenses-container">
-        <h1>إدارة المصروفات</h1>
-        <p>هنا يمكنك إضافة المصروفات الشهرية ومتابعة التكاليف.</p>
-        <button id="logout-button">تسجيل الخروج</button>
-    </div>
+  <h2>شاشة المصروفات</h2>
 
-    <!-- Firebase Libraries -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <h3>إجمالي الإيرادات والمصروفات</h3>
+  <p id="total-revenue-expenses">الإيرادات: 5000 EGP، المصروفات: 2000 EGP</p>
 
-    <!-- Firebase Configuration -->
-    <script src="js/firebase-config.js"></script>
+  <h3>حسابات تفصيلية لكل معلم</h3>
+  <table>
+    <tr>
+      <th>اسم المعلم</th>
+      <th>المبلغ المستحق</th>
+    </tr>
+    <tr>
+      <td>أحمد محمد</td>
+      <td>500 EGP</td>
+    </tr>
+  </table>
 
-    <!-- Expenses Logic -->
-    <script src="js/expenses.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/expenses.js"></script>
 </body>
 </html>

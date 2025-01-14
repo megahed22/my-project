@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>تسجيل الدخول</title>
+</head>
+<body>
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+    <form id="login-form">
+      <label for="residence">محل الإقامة:</label>
+      <input type="text" id="residence" name="residence" required>
+
+      <label for="user-type">نوع المستخدم:</label>
+      <select id="user-type" name="user-type">
+        <option value="teacher">معلم</option>
+        <option value="student">طالب</option>
+      </select>
+
+      <button type="submit">دخول</button>
+    </form>
+  </div>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

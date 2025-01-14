@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة الطالب</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>الطالب</title>
 </head>
 <body>
-    <div class="student-container">
-        <h1>مرحبًا بك في صفحة الطالب</h1>
-        <p>هنا يمكنك الاطلاع على الدروس الخاصة بك والتفاعل مع المعلمين.</p>
-        <button id="logout-button">تسجيل الخروج</button>
-    </div>
+  <h2>مرحبًا بك في صفحة الطالب</h2>
+  
+  <h3>الحصص المتبقية</h3>
+  <p id="remaining-sessions">عدد الحصص المتبقية: 5</p>
 
-    <!-- Firebase Libraries -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <h3>العروض الشهرية</h3>
+  <ul>
+    <li>8 حصص - 80 SAR</li>
+    <li>12 حصة - 110 SAR</li>
+    <li>16 حصة - 140 SAR</li>
+  </ul>
 
-    <!-- Firebase Configuration -->
-    <script src="js/firebase-config.js"></script>
+  <h3>إشعار دفع رسوم الاشتراك</h3>
+  <p>تم دفع الرسوم بنجاح.</p>
 
-    <!-- Student Logic -->
-    <script src="js/student.js"></script>
+  <h3>رفع إيصال الدفع</h3>
+  <form id="upload-receipt-form">
+    <input type="file" id="receipt" name="receipt" accept="image/*">
+    <button type="submit">رفع الإيصال</button>
+  </form>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/student.js"></script>
 </body>
 </html>

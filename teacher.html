@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة المعلم</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>المعلم</title>
 </head>
 <body>
-    <div class="teacher-container">
-        <h1>مرحبًا بك في صفحة المعلم</h1>
-        <p>هنا يمكنك إدارة دروسك وجميع التفاصيل المتعلقة بالطلاب.</p>
-        <button id="logout-button">تسجيل الخروج</button>
-    </div>
+  <h2>مرحبًا بك في صفحة المعلم</h2>
+  
+  <h3>المواعيد والحصص</h3>
+  <table>
+    <tr>
+      <th>التاريخ</th>
+      <th>الوقت</th>
+      <th>الموضوع</th>
+    </tr>
+    <tr>
+      <td>2025-01-15</td>
+      <td>10:00 AM</td>
+      <td>درس القرآن</td>
+    </tr>
+  </table>
 
-    <!-- Firebase Libraries -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <h3>تسجيل المتابعة بعد الحصة</h3>
+  <form id="lesson-follow-up-form">
+    <label for="lesson-notes">الملاحظات:</label>
+    <textarea id="lesson-notes" name="lesson-notes" rows="4"></textarea>
+    <button type="submit">تسجيل الملاحظات</button>
+  </form>
 
-    <!-- Firebase Configuration -->
-    <script src="js/firebase-config.js"></script>
+  <h3>إجمالي المبالغ المستحقة</h3>
+  <p id="total-amount">1000 EGP</p>
 
-    <!-- Teacher Logic -->
-    <script src="js/teacher.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/teacher.js"></script>
 </body>
 </html>
