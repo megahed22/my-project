@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
-  <title>الصفحة الرئيسية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy of Al-Tibyan</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.appspot.com",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:516f4b2b98562b3dbc588a",
+            measurementId: "G-MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="login.html">تسجيل الدخول</a></li>
-        <li><a href="about.html">عن الأكاديمية</a></li>
-        <li><a href="contact.html">اتصل بنا</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <h1>مرحبًا بكم في أكاديمية التبيان</h1>
-    <p>نحن نقدم دروسًا في حفظ القرآن وتعليم اللغة العربية والدراسات الإسلامية.</p>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 أكاديمية التبيان | جميع الحقوق محفوظة</p>
-  </footer>
+    <header>
+        <h1>أكاديمية التبيان</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="login.html">تسجيل الدخول</a></li>
+                <li><a href="register.html">تسجيل جديد</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>مرحبًا بك في أكاديمية التبيان</h2>
+        <p>هنا نقدم لك دورات تعليمية للقرآن الكريم واللغة العربية.</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 أكاديمية التبيان</p>
+    </footer>
 </body>
 </html>
