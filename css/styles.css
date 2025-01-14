@@ -1,97 +1,73 @@
-/* تنسيق عام للصفحة */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #004d1a;
+    background-color: #2d6a4f;
     color: white;
-    padding: 20px;
     text-align: center;
+    padding: 20px;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
+    font-size: 36px;
 }
 
-nav ul {
-    list-style-type: none;
-    padding: 0;
+header p {
+    font-size: 18px;
 }
 
-nav ul li {
-    display: inline;
-    margin-right: 15px;
-}
-
-nav ul li a {
+.actions a {
+    color: #f4f4f4;
+    margin: 10px;
     text-decoration: none;
-    color: white;
-    font-size: 1.2em;
-    transition: color 0.3s ease;
+    padding: 10px;
+    background-color: #55a630;
+    border-radius: 5px;
 }
 
-nav ul li a:hover {
-    color: #ffcc00;
-}
-
-main {
-    padding: 50px;
-    text-align: center;
-}
-
-main h2 {
-    color: #004d1a;
-    font-size: 2em;
-}
-
-main p {
-    font-size: 1.2em;
-    color: #333;
+.actions a:hover {
+    background-color: #3a7a2d;
 }
 
 footer {
-    background-color: #004d1a;
+    background-color: #2d6a4f;
     color: white;
     text-align: center;
     padding: 10px;
     position: fixed;
-    bottom: 0;
     width: 100%;
+    bottom: 0;
 }
 
-/* تنسيق صفحة التسجيل */
 form {
-    background-color: white;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
-    border-radius: 8px;
+    background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin: 50px auto;
+    margin: 20px;
 }
 
 form input {
-    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
 form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #004d1a;
+    background-color: #55a630;
     color: white;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #ffcc00;
+    background-color: #3a7a2d;
 }

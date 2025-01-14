@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الخروج</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>تسجيل الخروج</h1>
+    </header>
+
+    <section>
+        <p>هل أنت متأكد من أنك تريد تسجيل الخروج؟</p>
+        <button onclick="logout()">نعم، تسجيل الخروج</button>
+        <button onclick="window.location.href='index.html'">إلغاء</button>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script>
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'login.html'; // التوجيه إلى صفحة تسجيل الدخول بعد الخروج
+            }).catch((error) => {
+                console.error("خطأ في تسجيل الخروج: ", error);
+            });
+        }
+    </script>
+</body>
+</html>

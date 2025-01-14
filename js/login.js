@@ -1,18 +1,3 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
-    authDomain: "taleem-6c9b2.firebaseapp.com",
-    projectId: "taleem-6c9b2",
-    storageBucket: "taleem-6c9b2.appspot.com",
-    messagingSenderId: "746506526783",
-    appId: "1:746506526783:web:516f4b2b98562b3dbc588a",
-    measurementId: "G-MEASUREMENT_ID"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// تسجيل الدخول
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -22,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            
+
             // التحقق من الدور في قاعدة البيانات Firestore
             firebase.firestore().collection("users").doc(user.uid).get().then((doc) => {
                 if (doc.exists) {
@@ -40,7 +25,6 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             });
         })
         .catch((error) => {
-            const errorCode = error.code;
             const errorMessage = error.message;
             alert("خطأ: " + errorMessage);
         });
