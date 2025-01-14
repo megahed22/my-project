@@ -1,3 +1,32 @@
+<?php
+// الاتصال بقاعدة البيانات
+$servername = "localhost";
+$username = "root";  // اسم المستخدم لقاعدة البيانات
+$password = "";      // كلمة المرور
+$dbname = "altebean_ac";  // اسم قاعدة البيانات
+
+// إنشاء الاتصال
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// التحقق من الاتصال
+if ($conn->connect_error) {
+  die("فشل الاتصال بالقاعدة: " . $conn->connect_error);
+}
+
+// استرجاع بيانات الطالب
+$student_id = 1; // يجب تعديل هذا ليتناسب مع معرّف الطالب الذي سجل الدخول
+$sql = "SELECT * FROM students WHERE id = $student_id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  $student = $result->fetch_assoc();
+} else {
+  echo "لا توجد بيانات للطالب.";
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -10,7 +39,7 @@
   <h2>مرحبًا بك في صفحة الطالب</h2>
   
   <h3>الحصص المتبقية</h3>
-  <p id="remaining-sessions">عدد الحصص المتبقية: 5</p>
+  <p id="remaining-sessions">عدد الحصص المتبقية: <?php echo $student['remaining_classes']; ?></p>
 
   <h3>العروض الشهرية</h3>
   <ul>
@@ -20,11 +49,11 @@
   </ul>
 
   <h3>إشعار دفع رسوم الاشتراك</h3>
-  <p>تم دفع الرسوم بنجاح.</p>
+  <p>تم دفع الرسوم: <?php echo $student['payment_status'] == 'paid' ? 'تم دفع الرسوم بنجاح.' : 'لم يتم دفع الرسوم بعد.'; ?></p>
 
   <h3>رفع إيصال الدفع</h3>
-  <form id="upload-receipt-form">
-    <input type="file" id="receipt" name="receipt" accept="image/*">
+  <form id="upload-receipt-form" action="upload_receipt.php" method="post" enctype="multipart/form-data">
+    <input type="file" id="receipt" name="receipt" accept="image/*" required>
     <button type="submit">رفع الإيصال</button>
   </form>
 

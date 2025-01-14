@@ -10,17 +10,13 @@
   <h2>مرحبًا بك في صفحة المعلم</h2>
   
   <h3>المواعيد والحصص</h3>
-  <table>
+  <table id="lessons-table">
     <tr>
       <th>التاريخ</th>
       <th>الوقت</th>
       <th>الموضوع</th>
     </tr>
-    <tr>
-      <td>2025-01-15</td>
-      <td>10:00 AM</td>
-      <td>درس القرآن</td>
-    </tr>
+    <!-- سيتم ملء هذه البيانات من Firebase -->
   </table>
 
   <h3>تسجيل المتابعة بعد الحصة</h3>
@@ -31,8 +27,10 @@
   </form>
 
   <h3>إجمالي المبالغ المستحقة</h3>
-  <p id="total-amount">1000 EGP</p>
+  <p id="total-amount">0 EGP</p>
 
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/teacher.js"></script>
 </body>
