@@ -3,14 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academy of Al-Tibyan</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <title>أكاديمية التبيان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background-color: #003300;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .cta-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .cta-button:hover {
+            background-color: #45a049;
+        }
+        .content {
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+        }
+        .testimonials {
+            background-color: #e8f5e9;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .courses {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .course-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 200px;
+        }
+        .course-card h3 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .course-card p {
+            color: #555;
+        }
+        .footer {
+            background-color: #003300;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>مرحبا بكم في أكاديمية التبيان</h1>
+        <p>حيث يلتقي العمل والإيمان</p>
+        <a href="login.html" class="cta-button">تسجيل الدخول</a>
+        <a href="register.html" class="cta-button">سجل الآن</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>بيئة تعليمية متكاملة</h2>
+        <p>نحن في أكاديمية التبيان نقدم أفضل أساليب التعليم في القرآن الكريم، اللغة العربية، والدراسات الإسلامية مع نخبة من المعلمين المحترفين.</p>
+        <p>نستقبل طلاب من جميع أنحاء العالم ونقدم برامج دراسية متميزة.</p>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+        <h3>آراء الطلاب</h3>
+        <p>"أكاديمية التبيان ساعدتني على تحسين مستوى حفظ القرآن الكريم واللغة العربية. المعلمون رائعون!" - أحمد من الإمارات</p>
+        <p>"بيئة تعليمية مريحة ومحفزة، وأسلوب تدريس مميز. أنصح الجميع بالانضمام!" - فاطمة من السعودية</p>
+    </div>
+
+    <!-- Courses Section -->
+    <div class="content">
+        <h2>الدورات الدراسية لدينا</h2>
+        <div class="courses">
+            <div class="course-card">
+                <h3>دورة حفظ القرآن الكريم</h3>
+                <p>برنامج مخصص لتعليم حفظ القرآن الكريم مع مراجعة دورية.</p>
+            </div>
+            <div class="course-card">
+                <h3>دورة اللغة العربية</h3>
+                <p>دورة متكاملة لتعلم اللغة العربية من البداية وحتى الاحتراف.</p>
+            </div>
+            <div class="course-card">
+                <h3>دورة الدراسات الإسلامية</h3>
+                <p>دورة تعليمية شاملة في كل ما يخص الدراسات الإسلامية.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 أكاديمية التبيان - جميع الحقوق محفوظة</p>
+    </div>
+
+    <!-- Firebase Script -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
     <script>
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
             authDomain: "taleem-6c9b2.firebaseapp.com",
@@ -20,28 +136,8 @@
             appId: "1:746506526783:web:516f4b2b98562b3dbc588a",
             measurementId: "G-MEASUREMENT_ID"
         };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
     </script>
-</head>
-<body>
-    <header>
-        <h1>أكاديمية التبيان</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="login.html">تسجيل الدخول</a></li>
-                <li><a href="register.html">تسجيل جديد</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>مرحبًا بك في أكاديمية التبيان</h2>
-        <p>هنا نقدم لك دورات تعليمية للقرآن الكريم واللغة العربية.</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 أكاديمية التبيان</p>
-    </footer>
+
 </body>
 </html>

@@ -3,27 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الطالب</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>لوحة تحكم الطالب - أكاديمية التبيان</title>
+    <link rel="stylesheet" href="styles.css"> <!-- تأكد من إضافة تنسيق الـ CSS -->
 </head>
 <body>
     <header>
-        <h1>مرحبا بك، طالب أكاديمية التبيان</h1>
+        <h1>أكاديمية التبيان - لوحة تحكم الطالب</h1>
         <nav>
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="profile.html">الملف الشخصي</a></li>
-                <li><a href="logout.html">تسجيل الخروج</a></li>
+                <li><a href="student-dashboard.html">لوحة التحكم</a></li>
+                <li><a href="logout.html" id="logoutBtn">تسجيل الخروج</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
-        <h2>لوحة تحكم الطالب</h2>
-        <p>هنا يمكنك مشاهدة الحصص المتبقية الخاصة بك.</p>
-        <!-- أضف المزيد من المحتوى حسب الحاجة -->
+        <h2>مرحبًا بك في لوحة تحكم الطالب</h2>
+
+        <!-- عرض الحصص المتبقية -->
+        <section>
+            <h3>حصصك المتبقية</h3>
+            <ul id="remainingClasses">
+                <li>حصة 1: 8 حصص</li>
+                <li>حصة 2: 12 حصص</li>
+                <li>حصة 3: 16 حصص</li>
+            </ul>
+        </section>
+
+        <!-- إشعار حالة الدفع -->
+        <section>
+            <h3>إشعار حالة الدفع</h3>
+            <p id="paymentStatus">لم يتم دفع الرسوم بعد.</p>
+        </section>
+
+        <!-- رفع إيصال الدفع -->
+        <section>
+            <h3>رفع إيصال الدفع</h3>
+            <form id="uploadReceiptForm">
+                <label for="receiptImage">اختر صورة إيصال الدفع:</label>
+                <input type="file" id="receiptImage" accept="image/*" required>
+                <button type="submit">رفع الإيصال</button>
+            </form>
+        </section>
     </main>
+
     <footer>
         <p>&copy; 2025 أكاديمية التبيان</p>
     </footer>
+
+    <script src="firebase.js"></script>
+    <script src="student-dashboard.js"></script> <!-- ربط ملف JavaScript الخاص بالطالب -->
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الطالب - أكاديمية التبيان</title>
+    <link rel="stylesheet" href="styles.css"> <!-- تأكد من إضافة تنسيق الـ CSS -->
+</head>
+<body>
+    <header>
+        <h1>أكاديمية التبيان - لوحة تحكم الطالب</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="student-dashboard.html">لوحة التحكم</a></li>
+                <li><a href="logout.html" id="logoutBtn">تسجيل الخروج</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>مرحبًا بك في لوحة تحكم الطالب</h2>
+
+        <!-- عرض الحصص المتبقية -->
+        <section>
+            <h3>حصصك المتبقية</h3>
+            <ul id="remainingClasses">
+                <li>حصة 1: 8 حصص</li>
+                <li>حصة 2: 12 حصص</li>
+                <li>حصة 3: 16 حصص</li>
+            </ul>
+        </section>
+
+        <!-- إشعار حالة الدفع -->
+        <section>
+            <h3>إشعار حالة الدفع</h3>
+            <p id="paymentStatus">لم يتم دفع الرسوم بعد.</p>
+        </section>
+
+        <!-- رفع إيصال الدفع -->
+        <section>
+            <h3>رفع إيصال الدفع</h3>
+            <form id="uploadReceiptForm">
+                <label for="receiptImage">اختر صورة إيصال الدفع:</label>
+                <input type="file" id="receiptImage" accept="image/*" required>
+                <button type="submit">رفع الإيصال</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 أكاديمية التبيان</p>
+    </footer>
+
+    <script src="firebase.js"></script>
+    <script src="student-dashboard.js"></script> <!-- ربط ملف JavaScript الخاص بالطالب -->
 </body>
 </html>
