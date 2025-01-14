@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل جديد</title>
+    <title>تسجيل جديد - أكاديمية التبيان</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,36 +13,74 @@
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="login.html">تسجيل الدخول</a></li>
+                <li><a href="register.html">تسجيل جديد</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <h2>تسجيل جديد</h2>
         <form id="registerForm">
-            <label for="username">اسم المستخدم:</label>
-            <input type="text" id="username" required>
-
-            <label for="email">البريد الإلكتروني:</label>
-            <input type="email" id="email" required>
-
-            <label for="password">كلمة المرور:</label>
-            <input type="password" id="password" required>
-
-            <label for="location">محل الإقامة:</label>
-            <input type="text" id="location" required>
-
-            <label for="role">نوع المستخدم:</label>
-            <select id="role">
-                <option value="teacher">معلم</option>
+            <input type="text" id="username" placeholder="اسم المستخدم" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <input type="text" id="location" placeholder="محل الإقامة" required>
+            <select id="role" required>
                 <option value="student">طالب</option>
+                <option value="teacher">معلم</option>
             </select>
-
             <button type="submit">تسجيل</button>
         </form>
     </main>
     <footer>
         <p>&copy; 2025 أكاديمية التبيان</p>
     </footer>
-    <script src="app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+    <script src="firebase.js"></script> <!-- ربط ملف JavaScript هنا -->
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل جديد - أكاديمية التبيان</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>أكاديمية التبيان</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="login.html">تسجيل الدخول</a></li>
+                <li><a href="register.html">تسجيل جديد</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>تسجيل جديد</h2>
+        <form id="registerForm">
+            <input type="text" id="username" placeholder="اسم المستخدم" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <input type="text" id="location" placeholder="محل الإقامة" required>
+            <select id="role" required>
+                <option value="student">طالب</option>
+                <option value="teacher">معلم</option>
+            </select>
+            <button type="submit">تسجيل</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2025 أكاديمية التبيان</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+    <script src="firebase.js"></script> <!-- ربط ملف JavaScript هنا -->
 </body>
 </html>
