@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المصروفات</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="expenses-container">
+        <h1>إدارة المصروفات</h1>
+        <p>هنا يمكنك إضافة المصروفات الشهرية ومتابعة التكاليف.</p>
+        <button id="logout-button">تسجيل الخروج</button>
+    </div>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Expenses Logic -->
+    <script src="js/expenses.js"></script>
+</body>
+</html>

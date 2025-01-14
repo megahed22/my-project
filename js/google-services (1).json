@@ -1,0 +1,226 @@
+{
+  "project_info": {
+    "project_number": "746506526783",
+    "project_id": "taleem-6c9b2",
+    "storage_bucket": "taleem-6c9b2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:516f4b2b98562b3dbc588a",
+        "android_client_info": {
+          "package_name": "altebean.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:845a1327ad26ecb1bc588a",
+        "android_client_info": {
+          "package_name": "cc.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:4de5eec76efad240bc588a",
+        "android_client_info": {
+          "package_name": "com.altebean.academy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:cc6ca7a2261a317cbc588a",
+        "android_client_info": {
+          "package_name": "com.altebeana.cademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:c3eb167d796eef24bc588a",
+        "android_client_info": {
+          "package_name": "mloha.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746506526783:android:3f739ae44d6f5b96bc588a",
+        "android_client_info": {
+          "package_name": "tsmeeh.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746506526783-i2prgid4mmr172mdmfp16avd47vsspgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746506526783-r6785nphrt29f7470brlgueodk68d2qp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.altebeanApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
