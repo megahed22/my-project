@@ -28,6 +28,17 @@
             width: 100%;
             max-width: 400px;
             margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .input-group {
@@ -41,10 +52,12 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             font-size: 1em;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
         }
 
         .input-group input:focus {
             border-color: #004e92;
+            box-shadow: 0 0 5px rgba(0, 78, 146, 0.6);
             outline: none;
         }
 
@@ -57,10 +70,12 @@
             font-size: 1.2em;
             border-radius: 5px;
             width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .btn:hover {
             background-color: #feb47b;
+            transform: scale(1.05);
         }
 
         footer {
@@ -136,9 +151,13 @@
         function checkUserRole(user) {
             // التحقق من البريد الإلكتروني المستخدم لتحديد الدور
             if (user.email.includes("student")) {
-                window.location.href = "student-dashboard.html"; // إذا كان الطالب
+                setTimeout(() => {
+                    window.location.href = "student-dashboard.html"; // إذا كان الطالب
+                }, 500); // الانتقال بعد فترة قصيرة لإضافة تأثير الانتقال
             } else if (user.email.includes("teacher")) {
-                window.location.href = "teacher-dashboard.html"; // إذا كان المعلم
+                setTimeout(() => {
+                    window.location.href = "teacher-dashboard.html"; // إذا كان المعلم
+                }, 500); // الانتقال بعد فترة قصيرة لإضافة تأثير الانتقال
             } else {
                 alert("البريد الإلكتروني غير مرتبط بأي دور");
             }
