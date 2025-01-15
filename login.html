@@ -10,43 +10,99 @@
             background-color: #f0f4f8;
             text-align: center;
             padding-top: 50px;
+            margin: 0;
+            box-sizing: border-box;
         }
-        input {
+
+        h1 {
+            font-size: 2.5em;
+            color: #004e92;
+            margin-bottom: 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
             padding: 10px;
-            margin: 10px;
-            width: 80%;
-            font-size: 1.2em;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
+            font-size: 1em;
         }
+
+        .input-group input:focus {
+            border-color: #004e92;
+            outline: none;
+        }
+
         .btn {
             background-color: #ff7e5f;
             color: white;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border: none;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1.2em;
             border-radius: 5px;
+            width: 100%;
         }
+
         .btn:hover {
             background-color: #feb47b;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        footer a {
+            color: #004e92;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>تسجيل الدخول إلى أكاديمية التبيان</h1>
+        <h1>تسجيل الدخول إلى حسابك</h1>
     </header>
 
-    <div>
-        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-        <input type="password" id="password" placeholder="كلمة المرور" required>
-        <button id="loginBtn" class="btn">دخول</button>
+    <div class="login-container">
+        <div class="input-group">
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="كلمة المرور" required />
+        </div>
+
+        <button id="loginBtn" class="btn">تسجيل الدخول</button>
     </div>
+
+    <footer>
+        <p>ليس لديك حساب؟ <a href="signup.html">تسجيل جديد</a></p>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
@@ -60,18 +116,40 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
 
-        document.getElementById("loginBtn").addEventListener("click", () => {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+        // تسجيل الدخول
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    alert("تم الدخول بنجاح");
-                    window.location.href = "student-dashboard.html"; // أو "teacher-dashboard.html" بناءً على الدور
+                    const user = userCredential.user;
+                    // التحقق من الدور بعد تسجيل الدخول
+                    checkUserRole(user);
                 })
                 .catch((error) => {
-                    alert("حدث خطأ: " + error.message);
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
                 });
+        });
+
+        // التحقق من الدور
+        function checkUserRole(user) {
+            // التحقق من البريد الإلكتروني المستخدم لتحديد الدور
+            if (user.email.includes("student")) {
+                window.location.href = "student-dashboard.html"; // إذا كان الطالب
+            } else if (user.email.includes("teacher")) {
+                window.location.href = "teacher-dashboard.html"; // إذا كان المعلم
+            } else {
+                alert("البريد الإلكتروني غير مرتبط بأي دور");
+            }
+        }
+
+        // التحقق من حالة المستخدم الحالي
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // التحقق من الدور
+                checkUserRole(user);
+            }
         });
     </script>
 </body>
