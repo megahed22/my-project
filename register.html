@@ -123,10 +123,25 @@
         <p>لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
     </footer>
 
-    <!-- Firebase Config -->
-    <script src="js/firebase-config.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
 
     <script>
+   // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.appspot.com",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:516f4b2b98562b3dbc588a"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Handle signup
         const signupForm = document.getElementById('signupForm');
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
