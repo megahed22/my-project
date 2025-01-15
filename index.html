@@ -3,52 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Academy of Al-Tibyan</title>
+
+    <!-- Link to Firebase and other necessary libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            color: #333;
         }
 
         header {
             background-color: #006400;
-            color: #fff;
+            color: white;
             padding: 15px;
             text-align: center;
         }
 
         .content {
             padding: 30px;
-            background-color: #fff;
+            background-color: white;
             margin: 20px auto;
             max-width: 800px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            color: #006400;
-        }
-
-        .form-section {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #e9f7e9;
-            border-radius: 8px;
-        }
-
-        .form-section h3 {
-            color: #006400;
-        }
-
-        .form-section input,
-        .form-section select,
-        .form-section textarea {
+        .form-section input, .form-section select, .form-section textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -56,22 +44,36 @@
             border: 1px solid #ccc;
         }
 
+        .form-section button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .form-section button:hover {
+            background-color: #004d1a;
+        }
+
         footer {
             background-color: #006400;
-            color: #fff;
+            color: white;
             text-align: center;
-            padding: 15px 0;
+            padding: 10px;
             position: fixed;
             width: 100%;
             bottom: 0;
         }
 
-        .bank-details {
-            background-color: #f0f8ff;
-            padding: 10px;
-            border-radius: 8px;
+        .profile {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #e9f7e9;
             margin-top: 20px;
-            display: none;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -79,21 +81,20 @@
 <body>
     <header>
         <h1>Academy of Al-Tibyan</h1>
-        <p>تسجيل المعلمين والطلاب</p>
+        <p>نظام تسجيل المعلمين والطلاب</p>
     </header>
 
     <div class="content">
-        <!-- Form for Student Registration -->
-        <h2>تسجيل الطالب</h2>
-        <div class="form-section">
-            <h3>بيانات الطالب</h3>
+        <!-- تسجيل الطالب -->
+        <div id="student-registration" class="form-section">
+            <h3>تسجيل الطالب</h3>
             <input type="text" id="student-name" placeholder="الاسم" required>
-            <select id="student-country" required onchange="showBankDetails()">
+            <select id="student-country" required>
                 <option value="">اختر البلد</option>
-                <option value="الكويت">الكويت</option>
                 <option value="السعودية">السعودية</option>
                 <option value="الإمارات">الإمارات</option>
                 <option value="قطر">قطر</option>
+                <option value="الكويت">الكويت</option>
             </select>
             <select id="student-education" required>
                 <option value="">اختر المرحلة الدراسية</option>
@@ -105,20 +106,38 @@
             <button type="button" onclick="registerStudent()">تسجيل الطالب</button>
         </div>
 
-        <!-- Bank Details Section -->
-        <div id="bank-details" class="bank-details">
-            <h3>تفاصيل الحساب البنكي</h3>
-            <div id="bank-details-content"></div>
-        </div>
-
-        <h2>تسجيل المعلم</h2>
-        <div class="form-section">
-            <h3>بيانات المعلم</h3>
+        <!-- تسجيل المعلم -->
+        <div id="teacher-registration" class="form-section">
+            <h3>تسجيل المعلم</h3>
             <input type="text" id="teacher-name" placeholder="الاسم" required>
             <input type="email" id="teacher-email" placeholder="البريد الإلكتروني" required>
-            <input type="text" id="teacher-subject" placeholder="المواد الدراسية" required>
+            <input type="file" id="teacher-video" accept="video/*" required>
+            <input type="file" id="teacher-resume" accept=".pdf,.doc,.docx" required>
             <textarea id="teacher-bio" placeholder="سيرة المعلم" required></textarea>
             <button type="button" onclick="registerTeacher()">تسجيل المعلم</button>
+        </div>
+
+        <!-- صفحة الإيرادات -->
+        <div id="revenue-page" style="display:none;">
+            <h3>صفحة الإيرادات</h3>
+            <p>هنا تظهر تفاصيل الإيرادات الخاصة بالمعلمين والطلاب.</p>
+        </div>
+
+        <!-- صفحة الدفع للطالب -->
+        <div id="payment-page" style="display:none;">
+            <h3>الدفع</h3>
+            <p>هنا يمكن للطالب دفع الاشتراك أو اختيار الباقة المناسبة.</p>
+        </div>
+
+        <div class="profile" id="teacher-profile" style="display:none;">
+            <div>
+                <h4>الطلاب المسجلين</h4>
+                <ul id="student-list"></ul>
+            </div>
+            <div>
+                <h4>مواعيد الحصص</h4>
+                <ul id="lesson-schedule"></ul>
+            </div>
         </div>
     </div>
 
@@ -126,25 +145,20 @@
         <p>&copy; 2025 Academy of Al-Tibyan. All rights reserved.</p>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
             authDomain: "taleem-6c9b2.firebaseapp.com",
             projectId: "taleem-6c9b2",
-            storageBucket: "taleem-6c9b2.firebasestorage.app",
+            storageBucket: "taleem-6c9b2.appspot.com",
             messagingSenderId: "746506526783",
             appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
         };
-
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Register Student Function
+        // تسجيل الطالب
         function registerStudent() {
             const studentName = document.getElementById("student-name").value;
             const country = document.getElementById("student-country").value;
@@ -158,70 +172,34 @@
                 subjects: subjects
             }).then(() => {
                 alert("تم تسجيل الطالب بنجاح");
+                window.location.href = "payment-page.html"; // الانتقال إلى صفحة الدفع بعد التسجيل
             }).catch((error) => {
                 console.error("Error adding student: ", error);
             });
         }
 
-        // Register Teacher Function
+        // تسجيل المعلم
         function registerTeacher() {
             const teacherName = document.getElementById("teacher-name").value;
             const teacherEmail = document.getElementById("teacher-email").value;
-            const teacherSubject = document.getElementById("teacher-subject").value;
+            const teacherVideo = document.getElementById("teacher-video").files[0];
+            const teacherResume = document.getElementById("teacher-resume").files[0];
             const teacherBio = document.getElementById("teacher-bio").value;
 
+            // رفع الملفات إلى Firebase Storage أو أي خدمة تخزين أخرى
+            // ثم إضافة البيانات إلى Firestore
             db.collection("teachers").add({
                 name: teacherName,
                 email: teacherEmail,
-                subject: teacherSubject,
+                video: teacherVideo.name,
+                resume: teacherResume.name,
                 bio: teacherBio
             }).then(() => {
                 alert("تم تسجيل المعلم بنجاح");
+                window.location.href = "teacher-profile.html"; // الانتقال إلى صفحة المعلم بعد التسجيل
             }).catch((error) => {
                 console.error("Error adding teacher: ", error);
             });
-        }
-
-        // Show bank details based on country selection
-        function showBankDetails() {
-            const country = document.getElementById("student-country").value;
-            const bankDetailsContent = document.getElementById("bank-details-content");
-            const bankDetailsSection = document.getElementById("bank-details");
-
-            if (country === "الكويت") {
-                bankDetailsContent.innerHTML = `
-                    <p>اسم البنك: بنك الكويت الوطني</p>
-                    <p>رقم الحساب: 1234567890</p>
-                    <p>رقم الإيبان: KW81NBOK1234567890</p>
-                    <p>يرجى إرسال الإيصال بعد التحويل على الرابط التالي.</p>
-                `;
-            } else if (country === "السعودية") {
-                bankDetailsContent.innerHTML = `
-                    <p>اسم البنك: بنك الراجحي</p>
-                    <p>رقم الحساب: 9876543210</p>
-                    <p>رقم الإيبان: SA0380000000608010167510</p>
-                    <p>يرجى إرفاق وصل التحويل مع تسجيل الدفع.</p>
-                `;
-            } else if (country === "الإمارات") {
-                bankDetailsContent.innerHTML = `
-                    <p>اسم البنك: بنك أبوظبي الأول</p>
-                    <p>رقم الحساب: 1122334455</p>
-                    <p>رقم الإيبان: AE0703310000001122334455</p>
-                    <p>يرجى إرسال الإيصال عبر البريد الإلكتروني بعد التحويل.</p>
-                `;
-            } else if (country === "قطر") {
-                bankDetailsContent.innerHTML = `
-                    <p>اسم البنك: البنك الإسلامي القطري</p>
-                    <p>رقم الحساب: 5566778899</p>
-                    <p>رقم الإيبان: QA21QIBK00012345678901234</p>
-                    <p>يرجى إرسال صورة من الإيصال بعد التحويل.</p>
-                `;
-            } else {
-                bankDetailsSection.style.display = "none";
-                return;
-            }
-
-            bankDetailsSection.style.display = "block";
         }
     </script>
 </body>
