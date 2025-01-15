@@ -16,28 +16,37 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(to bottom, #4caf50, #087f23);
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
             color: #fff;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
+            overflow: hidden;
         }
 
         header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
         }
 
         section {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
             color: #333;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         section form {
@@ -55,12 +64,18 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        section input:focus {
+            border-color: #6a11cb;
+            outline: none;
         }
 
         section button {
             margin-top: 20px;
             padding: 10px;
-            background: #4caf50;
+            background: #6a11cb;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -70,7 +85,7 @@
         }
 
         section button:hover {
-            background: #087f23;
+            background: #4c0fa3;
         }
 
         footer {
@@ -108,7 +123,27 @@
         <p>لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
     </footer>
 
-    <script src="signup.js"></script>
+    <!-- Firebase Config -->
+    <script src="js/firebase-config.js"></script>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('تم التسجيل بنجاح!');
+                    signupForm.reset();
+                })
+                .catch((error) => {
+                    alert('حدث خطأ: ' + error.message);
+                });
+        });
+    </script>
 </body>
 
 </html>
