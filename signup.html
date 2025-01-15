@@ -1,43 +1,126 @@
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل في أكاديمية التبيان</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            text-align: center;
+            padding-top: 50px;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            font-size: 1.2em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            background-color: #ff7e5f;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #feb47b;
+        }
+        header {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>التسجيل في أكاديمية التبيان</h1>
+    </header>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
-        authDomain: "taleem-6c9b2.firebaseapp.com",
-        projectId: "taleem-6c9b2",
-        storageBucket: "taleem-6c9b2.firebasestorage.app",
-        messagingSenderId: "746506526783",
-        appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
-    };
+    <div>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
+        
+        <!-- إضافة خانة لاختيار الدور -->
+        <select id="role" required>
+            <option value="">اختر الدور</option>
+            <option value="student">طالب</option>
+            <option value="teacher">معلم</option>
+        </select>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
+        <button id="signupBtn" class="btn">تسجيل</button>
+    </div>
 
-    document.getElementById('loginBtn').addEventListener('click', function() {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                // التحقق من الدور
-                const userDocRef = doc(db, "users", user.uid);
-                getDoc(userDocRef).then((docSnap) => {
-                    if (docSnap.exists()) {
-                        const userData = docSnap.data();
-                        if (userData.role === "student") {
-                            window.location.href = "student-dashboard.html";
-                        } else if (userData.role === "teacher") {
-                            window.location.href = "teacher-dashboard.html";
-                        }
-                    }
+        // إعداد Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.firebasestorage.app",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore();
+
+        // عند النقر على زر التسجيل
+        document.getElementById("signupBtn").addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.getElementById("role").value;
+
+            // تحقق من أن المستخدم قد اختار الدور
+            if (!role) {
+                alert("يرجى اختيار الدور (طالب أو معلم)");
+                return;
+            }
+
+            // إجراء التسجيل باستخدام Firebase
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // تحديث ملف تعريف المستخدم في Firebase مع الدور
+                    updateProfile(user, {
+                        displayName: role
+                    }).then(() => {
+                        // حفظ الدور في قاعدة البيانات
+                        setDoc(doc(db, "users", user.uid), {
+                            role: role,
+                            email: user.email
+                        }).then(() => {
+                            alert("تم التسجيل بنجاح");
+                            // توجيه المستخدم إلى الصفحة المناسبة بناءً على الدور
+                            if (role === "student") {
+                                window.location.href = "student_dashboard.html"; // صفحة الطالب
+                            } else {
+                                window.location.href = "teacher_dashboard.html"; // صفحة المعلم
+                            }
+                        }).catch((error) => {
+                            alert("حدث خطأ في حفظ البيانات: " + error.message);
+                        });
+                    }).catch((error) => {
+                        alert("حدث خطأ في تحديث الملف الشخصي: " + error.message);
+                    });
+
+                })
+                .catch((error) => {
+                    alert("حدث خطأ: " + error.message);
                 });
-            })
-            .catch((error) => {
-                alert("خطأ في تسجيل الدخول: " + error.message);
-            });
-    });
-</script>
+        });
+    </script>
+</body>
+</html>
