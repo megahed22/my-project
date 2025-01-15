@@ -4,102 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
-
-    <!-- إضافة Firebase SDK -->
+    <link rel="stylesheet" href="styles.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- إضافة Firestore -->
-    
-    <!-- تنسيق CSS داخل الصفحة -->
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            direction: rtl;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: #f0f8ff;
+            color: #333;
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: #004d40;
             color: white;
-            padding: 20px;
             text-align: center;
-            width: 100%;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
         }
 
         section {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
             background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
+        }
+
+        section h2 {
+            font-size: 1.8em;
+            color: #004d40;
             text-align: center;
-        }
-
-        p {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 1em;
         }
 
         button {
-            background-color: #4CAF50;
+            width: 100%;
+            padding: 12px;
+            background-color: #009688;
             color: white;
-            padding: 12px 30px;
             border: none;
             border-radius: 5px;
+            font-size: 1.2em;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #00796b;
         }
 
         footer {
+            background-color: #004d40;
+            color: white;
             text-align: center;
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
             position: fixed;
-            width: 100%;
             bottom: 0;
+            width: 100%;
         }
+
+        footer p {
+            margin: 0;
+        }
+
     </style>
 </head>
-
 <body>
+
     <header>
-        <h1>تسجيل الدخول إلى أكاديمية التبيان</h1>
+        <h1>أكاديمية التبيان</h1>
+        <p>تسجيل الدخول</p>
     </header>
 
     <section>
-        <p>قم بتسجيل الدخول باستخدام بريدك الإلكتروني وكلمة المرور.</p>
-        <form id="loginForm">
+        <h2>مرحبا بك في أكاديمية التبيان</h2>
+        <form id="login-form">
             <input type="email" id="email" placeholder="البريد الإلكتروني" required>
             <input type="password" id="password" placeholder="كلمة المرور" required>
             <button type="submit">تسجيل الدخول</button>
         </form>
-        <p>ليس لديك حساب؟ <a href="signup.html" style="color: #4CAF50;">تسجيل حساب جديد</a></p>
     </section>
 
     <footer>
-        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
+        <p>جميع الحقوق محفوظة © أكاديمية التبيان</p>
     </footer>
 
     <script>
@@ -115,38 +118,41 @@
 
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.firestore(); // الاتصال بـ Firestore
 
-        // وظيفة تسجيل الدخول
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', (e) => {
+        // التحقق من حالة المستخدم عند تحميل الصفحة
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // إذا كان المستخدم مسجل الدخول، توجيههم إلى صفحة المعلم أو الطالب بناءً على الدور
+                const userRole = user.role; // يجب تحديد الدور في حساب المستخدم عند التسجيل
+                if (userRole === "teacher") {
+                    window.location.href = "teacher-dashboard.html"; // صفحة المعلم
+                } else if (userRole === "student") {
+                    window.location.href = "student-dashboard.html"; // صفحة الطالب
+                }
+            }
+        });
+
+        // تسجيل الدخول
+        document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
+                    // تسجيل الدخول بنجاح، سيتم التوجيه بناءً على الدور
                     const user = userCredential.user;
-                    // استرجاع الدور من Firestore بناءً على البريد الإلكتروني
-                    db.collection('users').doc(user.uid).get().then((doc) => {
-                        if (doc.exists) {
-                            const userRole = doc.data().role; // استرجاع الدور (student أو teacher)
-                            if (userRole === 'teacher') {
-                                window.location.href = 'teacher-dashboard.html'; // توجيه إلى صفحة المعلمين
-                            } else if (userRole === 'student') {
-                                window.location.href = 'student-dashboard.html'; // توجيه إلى صفحة الطلاب
-                            }
-                        }
-                    }).catch((error) => {
-                        console.error("حدث خطأ أثناء استرجاع البيانات: ", error);
-                    });
+                    const userRole = user.role; // افترض أن الدور مخزن في قاعدة البيانات
+                    if (userRole === "teacher") {
+                        window.location.href = "teacher-dashboard.html";
+                    } else if (userRole === "student") {
+                        window.location.href = "student-dashboard.html";
+                    }
                 })
                 .catch((error) => {
-                    alert('حدث خطأ: ' + error.message);
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
                 });
         });
     </script>
 </body>
-
 </html>
