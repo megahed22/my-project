@@ -19,49 +19,54 @@
             background: #004d40;
             color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 2.8em;
             margin: 0;
+            color: #fff;
         }
 
         header p {
+            font-size: 1.2em;
             margin: 10px 0;
         }
 
         .actions {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .actions a {
             text-decoration: none;
             color: #fff;
             background: #009688;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 5px;
             margin: 5px;
-            transition: background 0.3s;
+            font-size: 1.1em;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
         .actions a:hover {
             background: #00796b;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
         }
 
         .content {
-            padding: 30px;
+            padding: 50px 20px;
             text-align: center;
         }
 
         .content h2 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 20px;
             color: #004d40;
         }
 
         .content p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-bottom: 30px;
         }
 
@@ -72,21 +77,28 @@
 
         #student-reviews li {
             background: #e0f2f1;
-            margin: 10px auto;
-            padding: 15px;
+            margin: 15px auto;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 600px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        #student-reviews li:hover {
+            background: #b2dfdb;
         }
 
         footer {
             background: #004d40;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 15px 20px;
             position: relative;
             bottom: 0;
             width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
 
         footer p {
@@ -103,6 +115,30 @@
             }
             50% {
                 box-shadow: 0 0 15px #fff;
+            }
+        }
+
+        /* تحسين التنسيق للأجهزة الصغيرة */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .actions a {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+
+            .content h2 {
+                font-size: 2em;
+            }
+
+            .content p {
+                font-size: 1em;
             }
         }
     </style>
@@ -134,13 +170,14 @@
 
     <script>
         // إعداد Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
-  authDomain: "taleem-6c9b2.firebaseapp.com",
-  projectId: "taleem-6c9b2",
-  storageBucket: "taleem-6c9b2.firebasestorage.app",
-  messagingSenderId: "746506526783",
-  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.firebasestorage.app",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+        };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
