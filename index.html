@@ -1,229 +1,353 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع تعليمي</title>
-    <style>
-        /* تعيين خط مميز */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        header {
-            background-color: #006400;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        nav {
-            margin-top: 10px;
-        }
-
-        nav button {
-            background-color: #32cd32;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1em;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        nav button:hover {
-            background-color: #228b22;
-        }
-
-        .section {
-            display: none;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .section h2 {
-            color: #006400;
-            font-size: 2em;
-        }
-
-        form label {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        form input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-        }
-
-        form button {
-            background-color: #32cd32;
-            color: white;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        form button:hover {
-            background-color: #228b22;
-        }
-
-        p {
-            font-size: 1.2em;
-        }
-
-        button {
-            background-color: #32cd32;
-            color: white;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #228b22;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy of Al-Tibyan</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 </head>
 <body>
-    <header>
-        <h1>مرحبًا بك في الموقع التعليمي</h1>
-        <nav>
-            <button onclick="showSection('student-signup')">تسجيل الطالب</button>
-            <button onclick="showSection('teacher-signup')">تسجيل المعلم</button>
-            <button onclick="showSection('teacher-dashboard')">صفحة المعلم</button>
-            <button onclick="showSection('student-dashboard')">صفحة الطالب</button>
-            <button onclick="showSection('revenue')">صفحة الإيرادات</button>
-            <button onclick="showSection('payment')">صفحة الدفع</button>
-        </nav>
-    </header>
+  <header>
+    <h1>Academy of Al-Tibyan</h1>
+    <nav>
+      <a href="#register">التسجيل</a>
+      <a href="#login">تسجيل الدخول</a>
+    </nav>
+  </header>
 
-    <!-- قسم تسجيل الطالب -->
-    <div id="student-signup" class="section">
-        <h2>تسجيل الطالب</h2>
-        <form id="student-form">
-            <label for="student-name">الاسم:</label>
-            <input type="text" id="student-name" required><br><br>
-            <label for="student-country">الدولة:</label>
-            <input type="text" id="student-country" required><br><br>
-            <label for="student-education">المرحلة الدراسية:</label>
-            <input type="text" id="student-education" required><br><br>
-            <button type="button" onclick="storeStudentData()">تسجيل</button>
-        </form>
-    </div>
+  <!-- نموذج التسجيل -->
+  <section id="register">
+    <h2>التسجيل</h2>
+    <form id="registerForm">
+      <label>الاسم:</label>
+      <input type="text" id="name" required><br>
+      <label>البريد الإلكتروني:</label>
+      <input type="email" id="email" required><br>
+      <label>كلمة السر:</label>
+      <input type="password" id="password" required><br>
+      <label>الدور:</label>
+      <select id="role">
+        <option value="student">طالب</option>
+        <option value="teacher">معلم</option>
+      </select><br>
+      <div id="teacherFields" style="display: none;">
+        <label>المادة:</label>
+        <input type="text" id="subject"><br>
+        <label>المؤهل:</label>
+        <input type="text" id="qualification"><br>
+        <label>عدد سنوات الخبرة:</label>
+        <input type="number" id="experience"><br>
+        <label>رفع فيديو شرح:</label>
+        <input type="file" id="video" accept="video/*"><br>
+      </div>
+      <button type="submit">تسجيل</button>
+    </form>
+  </section>
 
-    <!-- قسم تسجيل المعلم -->
-    <div id="teacher-signup" class="section">
-        <h2>تسجيل المعلم</h2>
-        <form id="teacher-form">
-            <label for="teacher-name">الاسم:</label>
-            <input type="text" id="teacher-name" required><br><br>
-            <label for="teacher-experience">الخبرة:</label>
-            <input type="text" id="teacher-experience" required><br><br>
-            <label for="teacher-degree">المؤهل:</label>
-            <input type="text" id="teacher-degree" required><br><br>
-            <label for="teacher-video">رفع الفيديو:</label>
-            <input type="file" id="teacher-video" required><br><br>
-            <button type="button" onclick="storeTeacherData()">تسجيل</button>
-        </form>
-    </div>
+  <!-- نموذج تسجيل الدخول -->
+  <section id="login">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+      <label>البريد الإلكتروني:</label>
+      <input type="email" id="loginEmail" required><br>
+      <label>كلمة السر:</label>
+      <input type="password" id="loginPassword" required><br>
+      <button type="submit">دخول</button>
+    </form>
+  </section>
 
-    <!-- قسم صفحة المعلم -->
-    <div id="teacher-dashboard" class="section">
-        <h2>صفحة المعلم</h2>
-        <p>مرحبًا بك في صفحة المعلم</p>
-        <button onclick="showSection('revenue')">عرض الإيرادات</button><br><br>
-        <button onclick="showSection('payment')">دفع الاشتراك</button><br><br>
-    </div>
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+      authDomain: "taleem-6c9b2.firebaseapp.com",
+      projectId: "taleem-6c9b2",
+      storageBucket: "taleem-6c9b2.firebasestorage.app",
+      messagingSenderId: "746506526783",
+      appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+    };
+  
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
 
-    <!-- قسم صفحة الطالب -->
-    <div id="student-dashboard" class="section">
-        <h2>صفحة الطالب</h2>
-        <p>مرحبًا بك في صفحة الطالب</p>
-        <button onclick="showSection('payment')">دفع الاشتراك</button><br><br>
-    </div>
+    // عرض الحقول الخاصة بالمعلم بناءً على اختياره
+    document.getElementById('role').addEventListener('change', function() {
+      const role = this.value;
+      const teacherFields = document.getElementById('teacherFields');
+      if (role === 'teacher') {
+        teacherFields.style.display = 'block';
+      } else {
+        teacherFields.style.display = 'none';
+      }
+    });
 
-    <!-- قسم الإيرادات -->
-    <div id="revenue" class="section">
-        <h2>صفحة الإيرادات</h2>
-        <p>عرض الإيرادات هنا...</p>
-        <button onclick="showSection('teacher-dashboard')">عودة إلى صفحة المعلم</button><br><br>
-    </div>
+    // تسجيل المستخدم
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
 
-    <!-- قسم الدفع -->
-    <div id="payment" class="section">
-        <h2>صفحة الدفع</h2>
-        <form id="payment-form">
-            <label for="amount">المبلغ:</label>
-            <input type="number" id="amount" required><br><br>
-            <button type="button" onclick="processPayment()">دفع</button>
-        </form>
-    </div>
+      auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+        const user = userCredential.user;
+        firestore.collection('users').doc(user.uid).set({
+          name: document.getElementById('name').value,
+          email: email,
+          role: role,
+          subject: role === 'teacher' ? document.getElementById('subject').value : '',
+          qualification: role === 'teacher' ? document.getElementById('qualification').value : '',
+          experience: role === 'teacher' ? document.getElementById('experience').value : '',
+        }).then(() => {
+          alert('تم التسجيل بنجاح!');
+          window.location.href = '/login';  // يمكن تعديل الرابط بناءً على الصفحة التالية
+        });
+      }).catch((error) => {
+        alert(error.message);
+      });
+    });
 
-    <script>
-        // دالة لعرض القسم المحدد
-        function showSection(sectionId) {
-            // إخفاء جميع الأقسام
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.style.display = 'none');
-            
-            // عرض القسم المحدد
-            document.getElementById(sectionId).style.display = 'block';
-        }
+    // تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const loginEmail = document.getElementById('loginEmail').value;
+      const loginPassword = document.getElementById('loginPassword').value;
 
-        // دالة لتخزين بيانات الطالب
-        function storeStudentData() {
-            const studentData = {
-                name: document.getElementById('student-name').value,
-                country: document.getElementById('student-country').value,
-                educationLevel: document.getElementById('student-education').value
-            };
-            localStorage.setItem('studentData', JSON.stringify(studentData));
-            showSection('student-dashboard'); // الانتقال إلى صفحة الطالب بعد التسجيل
-        }
+      auth.signInWithEmailAndPassword(loginEmail, loginPassword).then((userCredential) => {
+        const user = userCredential.user;
+        window.location.href = /dashboard/${user.uid};  // توجيه إلى صفحة الحساب الشخصية
+      }).catch((error) => {
+        alert(error.message);
+      });
+    });
+  </script>
+</body>
+</html>
+محفظ
+محفظ قران
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy of Al-Tibyan</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+      direction: rtl;
+    }
+    header {
+      background-color: #004d33;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      margin: 20px auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #004d33;
+    }
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    form input, form select, form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    form input[type="file"] {
+      padding: 3px;
+    }
+    form button {
+      background-color: #004d33;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+    form button:hover {
+      background-color: #006e4b;
+    }
+    #teacherFields {
+      display: none;
+    }
+    #teacherFields input {
+      width: 48%;
+      margin-right: 4%;
+    }
+    #teacherFields input:last-child {
+      margin-right: 0;
+    }
+    footer {
+      background-color: #004d33;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Academy of Al-Tibyan</h1>
+    <nav>
+      <a href="#register">التسجيل</a>
+      <a href="#login">تسجيل الدخول</a>
+    </nav>
+  </header>
 
-        // دالة لتخزين بيانات المعلم
-        function storeTeacherData() {
-            const teacherData = {
-                name: document.getElementById('teacher-name').value,
-                experience: document.getElementById('teacher-experience').value,
-                degree: document.getElementById('teacher-degree').value,
-                video: document.getElementById('teacher-video').files[0].name
-            };
-            localStorage.setItem('teacherData', JSON.stringify(teacherData));
-            showSection('teacher-dashboard'); // الانتقال إلى صفحة المعلم بعد التسجيل
-        }
+  <!-- نموذج التسجيل -->
+  <section id="register">
+    <h2>التسجيل</h2>
+    <form id="registerForm">
+      <label>الاسم:</label>
+      <input type="text" id="name" required><br>
+      <label>البريد الإلكتروني:</label>
+      <input type="email" id="email" required><br>
+      <label>كلمة السر:</label>
+      <input type="password" id="password" required><br>
+      <label>الدور:</label>
+      <select id="role">
+        <option value="student">طالب</option>
+        <option value="teacher">معلم</option>
+      </select><br>
+      <div id="teacherFields">
+        <label>المادة:</label>
+        <input type="text" id="subject"><br>
+        <label>المؤهل:</label>
+        <input type="text" id="qualification"><br>
+        <label>عدد سنوات الخبرة:</label>
+        <input type="number" id="experience"><br>
+        <label>رفع فيديو شرح:</label>
+        <input type="file" id="video" accept="video/*"><br>
+      </div>
+      <button type="submit">تسجيل</button>
+    </form>
+  </section>
 
-        // دالة لمعالجة الدفع
-        function processPayment() {
-            const amount = document.getElementById('amount').value;
-            alert('تم الدفع بمبلغ: ' + amount);
-        }
-    </script>
+  <!-- نموذج تسجيل الدخول -->
+  <section id="login">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+      <label>البريد الإلكتروني:</label>
+      <input type="email" id="loginEmail" required><br>
+      <label>كلمة السر:</label>
+      <input type="password" id="loginPassword" required><br>
+      <button type="submit">دخول</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Academy of Al-Tibyan. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+      authDomain: "taleem-6c9b2.firebaseapp.com",
+      projectId: "taleem-6c9b2",
+      storageBucket: "taleem-6c9b2.firebasestorage.app",
+      messagingSenderId: "746506526783",
+      appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+    };
+  
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+
+    // عرض الحقول الخاصة بالمعلم بناءً على اختياره
+    document.getElementById('role').addEventListener('change', function() {
+      const role = this.value;
+      const teacherFields = document.getElementById('teacherFields');
+      if (role === 'teacher') {
+        teacherFields.style.display = 'block';
+      } else {
+        teacherFields.style.display = 'none';
+      }
+    });
+
+    // تسجيل المستخدم
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+
+      auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+        const user = userCredential.user;
+        firestore.collection('users').doc(user.uid).set({
+          name: document.getElementById('name').value,
+          email: email,
+          role: role,
+          subject: role === 'teacher' ? document.getElementById('subject').value : '',
+          qualification: role === 'teacher' ? document.getElementById('qualification').value : '',
+          experience: role === 'teacher' ? document.getElementById('experience').value : '',
+        }).then(() => {
+          alert('تم التسجيل بنجاح!');
+          window.location.href = '/login';  // يمكن تعديل الرابط بناءً على الصفحة التالية
+        });
+      }).catch((error) => {
+        alert(error.message);
+      });
+    });
+
+    // تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const loginEmail = document.getElementById('loginEmail').value;
+      const loginPassword = document.getElementById('loginPassword').value;
+
+      auth.signInWithEmailAndPassword(loginEmail, loginPassword).then((userCredential) => {
+        const user = userCredential.user;
+        window.location.href = /dashboard/${user.uid};  // توجيه إلى صفحة الحساب الشخصية
+      }).catch((error) => {
+        alert(error.message);
+      });
+    });
+  </script>
 </body>
 </html>
