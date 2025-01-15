@@ -1,143 +1,90 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - أكاديمية التبيان</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(to bottom, #6a11cb, #2575fc);
-            color: #fff;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        section {
-            background: #fff;
-            color: #333;
-            padding: 25px 35px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            max-width: 420px;
-            width: 100%;
-        }
-
-        section form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        section label {
-            margin: 15px 0 5px;
-            font-weight: 600;
-        }
-
-        section input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        section input:focus {
-            outline: none;
-            border-color: #6a11cb;
-        }
-
-        section button {
-            margin-top: 20px;
-            padding: 12px;
-            background: #2575fc;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-        }
-
-        section button:hover {
-            background: #6a11cb;
-            transform: scale(1.05);
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        footer a:hover {
-            text-decoration: none;
-        }
-    </style>
+    <title>لوحة تحكم المعلم</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
-
 <body>
     <header>
-        <h1>تسجيل الدخول إلى أكاديمية التبيان</h1>
+        <div class="container">
+            <h1>مرحبا بك، معلم أكاديمية التبيان</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="profile.html">الملف الشخصي</a></li>
+                    <li><a href="logout.html">تسجيل الخروج</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-
-    <section>
-        <form id="loginForm">
-            <label for="email">البريد الإلكتروني:</label>
-            <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
-            <label for="password">كلمة المرور:</label>
-            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
-            <button type="submit">تسجيل الدخول</button>
-        </form>
-    </section>
-
+    <main>
+        <div class="container">
+            <h2>لوحة تحكم المعلم</h2>
+            <p>هنا يمكنك مشاهدة مواعيد الحصص الخاصة بك.</p>
+            <div id="schedule" class="schedule"></div> <!-- سيتم عرض مواعيد الحصص هنا -->
+        </div>
+    </main>
     <footer>
-        <p>ليس لديك حساب؟ <a href="signup.html">سجل الآن</a></p>
+        <div class="container">
+            <p>&copy; 2025 أكاديمية التبيان</p>
+        </div>
     </footer>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+const firebaseConfig = {
+  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+  authDomain: "taleem-6c9b2.firebaseapp.com",
+  projectId: "taleem-6c9b2",
+  storageBucket: "taleem-6c9b2.firebasestorage.app",
+  messagingSenderId: "746506526783",
+  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
 
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
+        // تهيئة Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const firestore = firebase.firestore();
 
-            // Simulated role assignment (replace with Firebase logic)
-            const users = {
-                "teacher@example.com": "teacher",
-                "student@example.com": "student"
-            };
+        // التحقق من تسجيل الدخول
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // استرجاع بيانات المعلم من Firestore
+                const userId = user.uid;
+                const teacherRef = firestore.collection("teachers").doc(userId);
 
-            if (users[email]) {
-                if (users[email] === "teacher") {
-                    window.location.href = "teacher-dashboard.html";
-                } else if (users[email] === "student") {
-                    window.location.href = "student-dashboard.html";
-                }
+                teacherRef.get().then((doc) => {
+                    if (doc.exists) {
+                        // عرض مواعيد الحصص في الصفحة
+                        const data = doc.data();
+                        const schedule = data.schedule || [];
+                        
+                        const scheduleDiv = document.getElementById("schedule");
+                        if (schedule.length > 0) {
+                            let htmlContent = "<ul>";
+                            schedule.forEach(session => {
+                                htmlContent += `<li>${session}</li>`;
+                            });
+                            htmlContent += "</ul>";
+                            scheduleDiv.innerHTML = htmlContent;
+                        } else {
+                            scheduleDiv.innerHTML = "<p>لا توجد مواعيد حصص حالياً.</p>";
+                        }
+                    } else {
+                        console.log("لم يتم العثور على بيانات المعلم.");
+                    }
+                }).catch((error) => {
+                    console.error("خطأ في جلب بيانات المعلم: ", error);
+                });
             } else {
-                alert("خطأ في تسجيل الدخول. الرجاء التحقق من البريد الإلكتروني وكلمة المرور.");
+                window.location.href = "login.html"; // توجيه المستخدم إلى صفحة تسجيل الدخول إذا لم يكن مسجلاً الدخول
             }
         });
     </script>
 </body>
-
 </html>

@@ -1,137 +1,104 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - أكاديمية التبيان</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <title>تسجيل الخروج</title>
+
+    <!-- إضافة Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    <!-- تنسيق CSS داخل الصفحة -->
     <style>
         body {
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(to bottom, #4caf50, #087f23);
-            color: #fff;
+            direction: rtl;
         }
 
         header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
         }
 
         section {
-            background: #fff;
-            color: #333;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
+            text-align: center;
+            margin-top: 50px;
         }
 
-        section form {
-            display: flex;
-            flex-direction: column;
+        p {
+            font-size: 18px;
+            margin: 20px 0;
         }
 
-        section label {
-            margin: 10px 0 5px;
-            font-weight: 600;
-        }
-
-        section input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        section button {
-            margin-top: 20px;
-            padding: 10px;
-            background: #4caf50;
-            color: #fff;
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            font-size: 1.2rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            margin: 10px;
+            font-size: 16px;
         }
 
-        section button:hover {
-            background: #087f23;
+        button:hover {
+            background-color: #45a049;
         }
 
         footer {
-            margin-top: 20px;
             text-align: center;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        footer a:hover {
-            text-decoration: none;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
 </head>
-
 <body>
     <header>
-        <h1>تسجيل الدخول إلى أكاديمية التبيان</h1>
+        <h1>تسجيل الخروج</h1>
     </header>
 
     <section>
-        <form id="loginForm">
-            <label for="email">البريد الإلكتروني:</label>
-            <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
-            <label for="password">كلمة المرور:</label>
-            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
-            <button type="submit">تسجيل الدخول</button>
-        </form>
+        <p>هل أنت متأكد من أنك تريد تسجيل الخروج؟</p>
+        <button onclick="logout()">نعم، تسجيل الخروج</button>
+        <button onclick="window.location.href='index.html'">إلغاء</button>
     </section>
 
     <footer>
-        <p>ليس لديك حساب؟ <a href="signup.html">سجل الآن</a></p>
+        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
     </footer>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+        // إعداد Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+  authDomain: "taleem-6c9b2.firebaseapp.com",
+  projectId: "taleem-6c9b2",
+  storageBucket: "taleem-6c9b2.firebasestorage.app",
+  messagingSenderId: "746506526783",
+  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        // تهيئة Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-            // Simulated user roles (replace with Firebase or backend logic)
-            const users = {
-                "teacher@example.com": "teacher",
-                "student@example.com": "student"
-            };
-
-            if (users[email]) {
-                if (users[email] === "teacher") {
-                    window.location.href = "teacher-dashboard.html";
-                } else if (users[email] === "student") {
-                    window.location.href = "student-dashboard.html";
-                }
-            } else {
-                alert("خطأ في تسجيل الدخول. الرجاء التحقق من البريد الإلكتروني وكلمة المرور.");
-            }
-        });
+        // وظيفة تسجيل الخروج
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول
+            }).catch((error) => {
+                alert('حدث خطأ أثناء تسجيل الخروج: ' + error.message);
+            });
+        }
     </script>
 </body>
-
 </html>

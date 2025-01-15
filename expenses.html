@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,6 +99,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
 </head>
+
 <body>
 
     <header>
@@ -138,17 +140,15 @@
     </footer>
 
     <script>
-        // إعداد Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
-            authDomain: "taleem-6c9b2.firebaseapp.com",
-            projectId: "taleem-6c9b2",
-            storageBucket: "taleem-6c9b2.appspot.com",
-            messagingSenderId: "746506526783",
-            appId: "1:746506526783:web:516f4b2b98562b3dbc588a"
-        };
+const firebaseConfig = {
+  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+  authDomain: "taleem-6c9b2.firebaseapp.com",
+  projectId: "taleem-6c9b2",
+  storageBucket: "taleem-6c9b2.firebasestorage.app",
+  messagingSenderId: "746506526783",
+  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
 
-        // تهيئة Firebase
+        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
@@ -172,4 +172,5 @@
     </script>
 
 </body>
+
 </html>
