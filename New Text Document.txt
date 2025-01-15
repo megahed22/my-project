@@ -19,3 +19,15 @@ git add filename.js
 bash
 Copy code
 git commit -m "تحديث إعدادات Firebase وإضافة التغييرات الأخيرة"
+
+
+git add index.html
+git add login.html
+git add teacher-dashboard.html
+git add student-dashboard.html
+git add register.html
+git add login.html
+git add teacher-dashboard.html
+git add student-dashboard.html
+git add firebase-config.js
+git add styles.css
