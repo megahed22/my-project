@@ -4,109 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <style>
         body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f0f8ff;
-            color: #333;
-        }
-
-        header {
-            background-color: #004d40;
-            color: white;
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
             text-align: center;
-            padding: 20px;
+            padding-top: 50px;
         }
-
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-
-        section {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        section h2 {
-            font-size: 1.8em;
-            color: #004d40;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #009688;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #00796b;
-        }
-
-        footer {
-            background-color: #004d40;
-            color: white;
-            text-align: center;
+        input {
             padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            margin: 10px;
+            width: 80%;
+            font-size: 1.2em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-
-        footer p {
-            margin: 0;
+        .btn {
+            background-color: #ff7e5f;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 5px;
         }
-
+        .btn:hover {
+            background-color: #feb47b;
+        }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>أكاديمية التبيان</h1>
-        <p>تسجيل الدخول</p>
+        <h1>تسجيل الدخول إلى أكاديمية التبيان</h1>
     </header>
 
-    <section>
-        <h2>مرحبا بك في أكاديمية التبيان</h2>
-        <form id="login-form">
-            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="password" placeholder="كلمة المرور" required>
-            <button type="submit">تسجيل الدخول</button>
-        </form>
-    </section>
+    <div>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
+        <button id="loginBtn" class="btn">دخول</button>
+    </div>
 
-    <footer>
-        <p>جميع الحقوق محفوظة © أكاديمية التبيان</p>
-    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-    <script>
-        // إعداد Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
             authDomain: "taleem-6c9b2.firebaseapp.com",
@@ -116,41 +57,20 @@
             appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
 
-        // التحقق من حالة المستخدم عند تحميل الصفحة
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // إذا كان المستخدم مسجل الدخول، توجيههم إلى صفحة المعلم أو الطالب بناءً على الدور
-                const userRole = user.role; // يجب تحديد الدور في حساب المستخدم عند التسجيل
-                if (userRole === "teacher") {
-                    window.location.href = "teacher-dashboard.html"; // صفحة المعلم
-                } else if (userRole === "student") {
-                    window.location.href = "student-dashboard.html"; // صفحة الطالب
-                }
-            }
-        });
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-        // تسجيل الدخول
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            auth.signInWithEmailAndPassword(email, password)
+            signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // تسجيل الدخول بنجاح، سيتم التوجيه بناءً على الدور
-                    const user = userCredential.user;
-                    const userRole = user.role; // افترض أن الدور مخزن في قاعدة البيانات
-                    if (userRole === "teacher") {
-                        window.location.href = "teacher-dashboard.html";
-                    } else if (userRole === "student") {
-                        window.location.href = "student-dashboard.html";
-                    }
+                    alert("تم الدخول بنجاح");
+                    window.location.href = "student-dashboard.html"; // أو "teacher-dashboard.html" بناءً على الدور
                 })
                 .catch((error) => {
-                    alert('خطأ في تسجيل الدخول: ' + error.message);
+                    alert("حدث خطأ: " + error.message);
                 });
         });
     </script>

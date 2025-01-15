@@ -3,202 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الطالب - أكاديمية التبيان</title>
-
-    <!-- إضافة Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-
-    <!-- تنسيق CSS داخل الصفحة -->
+    <title>لوحة تحكم الطالب</title>
     <style>
-        /* تنسيق الصفحة بشكل عام */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
             text-align: center;
+            padding-top: 50px;
         }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
+        h1 {
+            color: #004e92;
         }
-
-        nav ul li {
-            display: inline-block;
-            margin: 0 15px;
-        }
-
-        nav ul li a {
+        .btn {
+            background-color: #ff7e5f;
             color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        main {
-            padding: 20px;
-            background-color: white;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        section {
-            margin-bottom: 20px;
-        }
-
-        h3 {
-            color: #4CAF50;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        ul li {
-            background-color: #f9f9f9;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 5px;
         }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        form {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        input[type="file"] {
-            margin: 10px 0;
+        .btn:hover {
+            background-color: #feb47b;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>أكاديمية التبيان - لوحة تحكم الطالب</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="student-dashboard.html">لوحة التحكم</a></li>
-                <li><a href="#" id="logoutBtn">تسجيل الخروج</a></li>
-            </ul>
-        </nav>
+        <h1>مرحبًا، [اسم الطالب]</h1>
+        <button class="btn" onclick="window.location.href='logout.html'">تسجيل الخروج</button>
     </header>
 
-    <main>
-        <h2>مرحبًا بك في لوحة تحكم الطالب</h2>
+    <section>
+        <h2>دوراتك</h2>
+        <!-- تفاصيل الدورات -->
+    </section>
 
-        <!-- عرض الحصص المتبقية -->
-        <section>
-            <h3>حصصك المتبقية</h3>
-            <ul id="remainingClasses">
-                <li>حصة 1: <span id="remainingClasses1">0</span> حصص</li>
-                <li>حصة 2: <span id="remainingClasses2">0</span> حصص</li>
-                <li>حصة 3: <span id="remainingClasses3">0</span> حصص</li>
-            </ul>
-        </section>
+    <script type="module">
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-        <!-- إشعار حالة الدفع -->
-        <section>
-            <h3>إشعار حالة الدفع</h3>
-            <p id="paymentStatus">انتظر قليلاً...</p>
-        </section>
+        const auth = getAuth();
 
-        <!-- رفع إيصال الدفع -->
-        <section>
-            <h3>رفع إيصال الدفع</h3>
-            <form id="uploadReceiptForm" action="upload_receipt.php" method="post" enctype="multipart/form-data">
-                <label for="receiptImage">اختر صورة إيصال الدفع:</label>
-                <input type="file" id="receiptImage" name="receiptImage" accept="image/*" required>
-                <button type="submit">رفع الإيصال</button>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 أكاديمية التبيان</p>
-    </footer>
-
-    <script>
-        // إعداد Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
-  authDomain: "taleem-6c9b2.firebaseapp.com",
-  projectId: "taleem-6c9b2",
-  storageBucket: "taleem-6c9b2.firebasestorage.app",
-  messagingSenderId: "746506526783",
-  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
-        // تهيئة Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-
-        // تسجيل الخروج
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            auth.signOut().then(() => {
-                window.location.href = 'login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول
+        document.querySelector(".btn").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
             }).catch((error) => {
-                alert('حدث خطأ أثناء تسجيل الخروج: ' + error.message);
+                alert("حدث خطأ أثناء تسجيل الخروج: " + error.message);
             });
         });
-
-        // الحصول على بيانات الطالب من قاعدة بيانات Firebase
-        const userId = auth.currentUser ? auth.currentUser.uid : null;
-        if (userId) {
-            const studentRef = database.ref('students/' + userId);
-            studentRef.once('value', (snapshot) => {
-                const studentData = snapshot.val();
-                if (studentData) {
-                    // عرض بيانات الطالب
-                    document.getElementById('remainingClasses1').innerText = studentData.remaining_classes_1;
-                    document.getElementById('remainingClasses2').innerText = studentData.remaining_classes_2;
-                    document.getElementById('remainingClasses3').innerText = studentData.remaining_classes_3;
-
-                    document.getElementById('paymentStatus').innerText = studentData.payment_status === 'paid' ? 'تم دفع الرسوم.' : 'لم يتم دفع الرسوم بعد.';
-                } else {
-                    document.getElementById('paymentStatus').innerText = 'لا توجد بيانات للطالب.';
-                }
-            });
-        } else {
-            document.getElementById('paymentStatus').innerText = 'لم يتم التعرف على الطالب.';
-        }
     </script>
 </body>
 </html>

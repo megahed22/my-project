@@ -4,101 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الخروج</title>
-
-    <!-- إضافة Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
-    <!-- تنسيق CSS داخل الصفحة -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            direction: rtl;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        section {
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        p {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>تسجيل الخروج</h1>
-    </header>
-
-    <section>
-        <p>هل أنت متأكد من أنك تريد تسجيل الخروج؟</p>
-        <button onclick="logout()">نعم، تسجيل الخروج</button>
-        <button onclick="window.location.href='index.html'">إلغاء</button>
-    </section>
-
-    <footer>
-        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
-    </footer>
-
-    <script>
-        // إعداد Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
-  authDomain: "taleem-6c9b2.firebaseapp.com",
-  projectId: "taleem-6c9b2",
-  storageBucket: "taleem-6c9b2.firebasestorage.app",
-  messagingSenderId: "746506526783",
-  appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
-
-        // تهيئة Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // وظيفة تسجيل الخروج
-        function logout() {
-            auth.signOut().then(() => {
-                window.location.href = 'login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول
-            }).catch((error) => {
-                alert('حدث خطأ أثناء تسجيل الخروج: ' + error.message);
-            });
-        }
+    <p>تم تسجيل الخروج بنجاح! سيتم تحويلك إلى الصفحة الرئيسية قريبًا.</p>
+    <script type="module">
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 2000);
     </script>
 </body>
 </html>
