@@ -13,5 +13,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
+
+// Initialize Firebase Auth for authentication
 const auth = firebase.auth();
+
+// Initialize Firestore for the database
 const db = firebase.firestore();
+
+// (اختياري) إذا كنت تستخدم Realtime Database
+// const database = firebase.database();
+
+// (اختياري) إذا كنت تستخدم Analytics
+// const analytics = firebase.analytics();

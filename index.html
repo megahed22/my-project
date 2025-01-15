@@ -3,8 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academy of Al-Tibyan</title>
+    <title>أكاديمية التبيان</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+            color: #333;
+        }
+
+        header {
+            background: #004d40;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        header p {
+            margin: 10px 0;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            color: #fff;
+            background: #009688;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .actions a:hover {
+            background: #00796b;
+        }
+
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #004d40;
+        }
+
+        .content p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        #student-reviews {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #student-reviews li {
+            background: #e0f2f1;
+            margin: 10px auto;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        footer {
+            background: #004d40;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .animated-button {
+            animation: glow 1.5s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px #fff;
+            }
+            50% {
+                box-shadow: 0 0 15px #fff;
+            }
+        }
+    </style>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
@@ -14,7 +115,7 @@
         <h1>أهلاً بكم في أكاديمية التبيان</h1>
         <p>حيث يلتقي العلم بالإبداع!</p>
         <div class="actions">
-            <a href="login.html">تسجيل الدخول</a>
+            <a href="login.html" class="animated-button">تسجيل الدخول</a>
             <a href="signup.html">التسجيل</a>
         </div>
     </header>
@@ -23,15 +124,28 @@
         <h2>آراء الطلاب</h2>
         <p>نحن نقدم بيئة تعليمية متكاملة مع أكفأ المعلمين، حيث يلتقي العمل بالإتقان.</p>
         <ul id="student-reviews">
-            <!-- ستتم إضافة آراء الطلاب هنا بواسطة JavaScript -->
+            <!-- آراء الطلاب ستضاف ديناميكيًا هنا -->
         </ul>
     </section>
 
     <footer>
-        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
+        <p>جميع الحقوق محفوظة © أكاديمية التبيان</p>
     </footer>
 
-    <script src="firebase-config.js"></script> <!-- ربط Firebase -->
-    <script src="index.js"></script> <!-- الرابط إلى الكود الخاص بصفحة الرئيسية -->
+    <script>
+        // أمثلة لآراء الطلاب
+        const reviews = [
+            "أكاديمية رائعة، تعلمت الكثير!",
+            "المعلمون محترفون ومتفانون.",
+            "أفضل تجربة تعليمية مررت بها على الإطلاق.",
+        ];
+
+        const reviewsList = document.getElementById('student-reviews');
+        reviews.forEach(review => {
+            const li = document.createElement('li');
+            li.textContent = review;
+            reviewsList.appendChild(li);
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+https://megahed22.github.io/my-project/
+
+
+
+5. إضافة التغييرات إلى Git
+لتضمين التغييرات التي أجريتها في Git، استخدم الأمر git add لإضافة الملفات:
+
+bash
+Copy code
+git add .
+إذا كنت تريد إضافة ملفات معينة فقط، يمكنك تحديد اسم الملف مثل:
+
+bash
+Copy code
+git add filename.js
+6. إجراء الالتزام (commit)
+بعد إضافة التغييرات، يجب عليك القيام بعمل "commit" لتوثيق التغييرات:
+
+bash
+Copy code
+git commit -m "تحديث إعدادات Firebase وإضافة التغييرات الأخيرة"

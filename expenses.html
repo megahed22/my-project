@@ -1,30 +1,175 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
-  <title>المصروفات</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المصروفات - لوحة التحكم</title>
+
+    <!-- تنسيق CSS داخل الصفحة -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        p {
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #loginForm input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #loginForm button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #loginForm button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <!-- إضافة Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
 </head>
 <body>
-  <h2>شاشة المصروفات</h2>
 
-  <h3>إجمالي الإيرادات والمصروفات</h3>
-  <p id="total-revenue-expenses">الإيرادات: 5000 EGP، المصروفات: 2000 EGP</p>
+    <header>
+        <h1>أكاديمية التبيان - لوحة تحكم الإدارة</h1>
+    </header>
 
-  <h3>حسابات تفصيلية لكل معلم</h3>
-  <table>
-    <tr>
-      <th>اسم المعلم</th>
-      <th>المبلغ المستحق</th>
-    </tr>
-    <tr>
-      <td>أحمد محمد</td>
-      <td>500 EGP</td>
-    </tr>
-  </table>
+    <!-- نموذج تسجيل الدخول -->
+    <div id="loginForm">
+        <h2>تسجيل الدخول</h2>
+        <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+        <input type="password" id="password" placeholder="أدخل كلمة السر" required>
+        <button onclick="login()">تسجيل الدخول</button>
+    </div>
 
-  <script src="js/firebase-config.js"></script>
-  <script src="js/expenses.js"></script>
+    <!-- محتوى الإدارة (يظهر بعد تسجيل الدخول) -->
+    <div id="adminContent" style="display: none;">
+        <h2>شاشة المصروفات</h2>
+
+        <h3>إجمالي الإيرادات والمصروفات</h3>
+        <p id="total-revenue-expenses">الإيرادات: 5000 EGP، المصروفات: 2000 EGP</p>
+
+        <h3>حسابات تفصيلية لكل معلم</h3>
+        <table>
+            <tr>
+                <th>اسم المعلم</th>
+                <th>المبلغ المستحق</th>
+            </tr>
+            <tr>
+                <td>أحمد محمد</td>
+                <td>500 EGP</td>
+            </tr>
+            <!-- يمكنك إضافة المزيد من المعلمين هنا -->
+        </table>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة لأكاديمية التبيان</p>
+    </footer>
+
+    <script>
+        // إعداد Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzUK08KZM997SmDZiaw2cBciLZoP2e5a0",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.appspot.com",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:516f4b2b98562b3dbc588a"
+        };
+
+        // تهيئة Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // وظيفة تسجيل الدخول
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // تحقق من البريد الإلكتروني وكلمة السر الخاصة بك
+            if (email === "megahedsaber7@gmail.com" && password === "2266133") {
+                auth.signInWithEmailAndPassword(email, password).then(() => {
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('adminContent').style.display = 'block';
+                }).catch((error) => {
+                    alert("فشل تسجيل الدخول: " + error.message);
+                });
+            } else {
+                alert("البريد الإلكتروني أو كلمة السر غير صحيحة.");
+            }
+        }
+    </script>
+
 </body>
 </html>
