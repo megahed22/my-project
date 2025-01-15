@@ -30,20 +30,60 @@
 </head>
 <body>
     <header>
-        <h1>مرحبًا، [اسم الطالب]</h1>
+        <h1 id="studentName">مرحبًا، الطالب</h1>
         <button class="btn" onclick="window.location.href='logout.html'">تسجيل الخروج</button>
     </header>
 
     <section>
         <h2>دوراتك</h2>
-        <!-- تفاصيل الدورات -->
+        <ul id="coursesList">
+            <!-- سيتم عرض قائمة الدورات هنا -->
+        </ul>
     </section>
 
     <script type="module">
+        // استيراد Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+        // إعداد Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtImiW_CiyzDqypdI4Ve8KIOqxC9TGRQE",
+            authDomain: "taleem-6c9b2.firebaseapp.com",
+            projectId: "taleem-6c9b2",
+            storageBucket: "taleem-6c9b2.firebasestorage.app",
+            messagingSenderId: "746506526783",
+            appId: "1:746506526783:web:2f2c24a0661f3c2bbc588a"
+        };
+
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
         const auth = getAuth();
+        const db = getFirestore();
 
+        // التحقق من حالة تسجيل الدخول وعرض اسم الطالب
+        const user = auth.currentUser;
+        if (user) {
+            document.getElementById("studentName").textContent = `مرحبًا، ${user.displayName || 'الطالب'}`;
+        } else {
+            window.location.href = "login.html";
+        }
+
+        // عرض قائمة الدورات
+        async function loadCourses() {
+            const coursesList = document.getElementById("coursesList");
+            const querySnapshot = await getDocs(collection(db, "courses"));
+            querySnapshot.forEach((doc) => {
+                const li = document.createElement("li");
+                li.textContent = doc.data().title; // استعراض اسم الدورة
+                coursesList.appendChild(li);
+            });
+        }
+
+        loadCourses();
+
+        // تسجيل الخروج
         document.querySelector(".btn").addEventListener("click", () => {
             signOut(auth).then(() => {
                 window.location.href = "login.html";
